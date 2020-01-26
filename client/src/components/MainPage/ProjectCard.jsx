@@ -8,14 +8,20 @@ const ProjectCard = props => {
   const { index, title, imgUrl, goal, totalFunds } = props;
 
   const urlTitle = title.replace(/ /g, "-").toLowerCase();
+  console.log(totalFunds);
+  console.log(goal);
 
   return (
     <Link to={`/projects/${index}/${urlTitle}`}>
-      <Box mx={4} my={5} width={350}>
+      <Box mx={4} my={5} maxWidth={350}>
         <Image
-          src={image}
-          StyleImgWrapper={{ width: "100%", height: 196, padding: 0 }}
-          hoverColor="rgba(0, 0, 0, 0.777)"
+          src={imgUrl}
+          StyleImgWrapper={{
+            width: "100%",
+            height: 200,
+            padding: 0
+          }}
+          hoverColor="rgba(0, 0, 0, 0.377)"
           pointerOnHover
         />
 

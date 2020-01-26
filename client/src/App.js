@@ -7,6 +7,7 @@ import getWeb3 from "./utils/getWeb3";
 import { Route, Switch } from "react-router-dom";
 import ProjectPage from "./components/ProjectPage";
 import { CampaignFactoryABI, CampaignFactoryAddress } from "./utils/contracts";
+import Loading from "./components/layouts/Loading";
 
 function App() {
   const [account, setAccount] = useState("");
@@ -41,22 +42,13 @@ function App() {
     }
   };
 
-  if (!account)
-    return (
-      <Container>
-        <Box mt={15}>
-          <Typography align="center" variant="h3">
-            ---Loading Web3 And Your Accounts---
-          </Typography>
-        </Box>
-      </Container>
-    );
+  if (!account) return <Loading msg="Loading Web3 and accounts" />;
 
   return (
     <div className="App">
       <Header />
       <Container>
-        <Box mt={15}>
+        <Box my={15}>
           <Switch>
             <Route
               path="/projects/:index/:title"

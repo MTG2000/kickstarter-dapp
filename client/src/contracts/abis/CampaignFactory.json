@@ -2001,12 +2001,12 @@
         }
       },
       "links": {},
-      "address": "0xbB5FC27BF84dC0faDFc3d603546a667fd54E745e",
-      "transactionHash": "0xa3ce66141f599287755f0e57a93631dfc2043c63b36b4df12da6a5a40bf45d8d"
+      "address": "0x94A6DcB063a88e742919EADa2c71FE408105d672",
+      "transactionHash": "0x93661eca779e0830ed049bd8c0ff15d6718348d50d375b5af1b17bc41789b684"
     }
   },
   "schemaVersion": "3.0.20",
-  "updatedAt": "2020-01-25T16:44:16.726Z",
+  "updatedAt": "2020-01-26T12:24:04.221Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {

@@ -5,4 +5,4 @@ export const CampaignFactoryABI = campFactoryFile.abi;
 export const CampaignABI = campFile.abi;
 
 export const CampaignFactoryAddress =
-  "0xbB5FC27BF84dC0faDFc3d603546a667fd54E745e";
+  "0x94A6DcB063a88e742919EADa2c71FE408105d672";

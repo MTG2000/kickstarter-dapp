@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CampaignABI } from "../../utils/contracts";
 import ProjectCard from "./ProjectCard";
 import { Grid } from "@material-ui/core";
+import Loading from "../layouts/Loading";
 
 const ProjectsList = ({ web3, campaignFactory, campaignsNum }) => {
   const [campaigns, setCampaigns] = useState([]);
@@ -14,10 +15,6 @@ const ProjectsList = ({ web3, campaignFactory, campaignsNum }) => {
           .campaignAddresses(i)
           .call();
         const _campaign = new web3.eth.Contract(CampaignABI, address);
-        const state = await _campaign.methods.state().call();
-        if (state === 1)
-          //Failed
-          continue;
 
         let Campaign = {};
         Campaign.index = i;
@@ -32,6 +29,10 @@ const ProjectsList = ({ web3, campaignFactory, campaignsNum }) => {
       setCampaigns(_campaigns);
     })();
   }, [campaignsNum]);
+
+  if (campaigns.length === 0)
+    return <Loading height="400px" msg="Loading Latest Projects" />;
+
   return (
     <Grid container>
       {campaigns.map(c => (

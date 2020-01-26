@@ -7,8 +7,17 @@ html {
 body {
   font-family: Farro, Verdana, Geneva, Tahoma, sans-serif;
   background: linear-gradient(45deg, #ccc, #eee);
+  padding: 0;
+  margin: 0;
+  min-height: 100vh;
+  height: 100%;
+  position: relative;
 }
 
 a {
   text-decoration: none;
+}
+
+.test {
+  color: rgba(76, 223, 76, 1);
 }

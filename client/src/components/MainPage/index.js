@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Container, Typography, Box } from "@material-ui/core";
 
 import ProjectsList from "./ProjectsList";
+import Loading from "../layouts/Loading";
 
 const MainPage = ({ web3, account, campaignFactory }) => {
   const [campaignsNum, setCampaignsNum] = useState(0);
@@ -26,15 +27,7 @@ const MainPage = ({ web3, account, campaignFactory }) => {
   }, []);
 
   if (!campaignFactory)
-    return (
-      <Container>
-        <Box mt={15}>
-          <Typography align="center" variant="h3">
-            ---Loading Data---
-          </Typography>
-        </Box>
-      </Container>
-    );
+    return <Loading msg="Loadign web3 & your account...." />;
 
   return (
     <Container>

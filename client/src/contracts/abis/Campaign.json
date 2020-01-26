@@ -7739,7 +7739,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.20",
-  "updatedAt": "2020-01-25T16:44:13.456Z",
+  "updatedAt": "2020-01-26T12:24:01.370Z",
   "devdoc": {
     "methods": {
       "isOwner()": {
