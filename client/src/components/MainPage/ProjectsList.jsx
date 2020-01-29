@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { CampaignABI } from "../../utils/contracts";
 import ProjectCard from "./ProjectCard";
-import { Grid } from "@material-ui/core";
+import { Grid, Typography, Box } from "@material-ui/core";
 import Loading from "../layouts/Loading";
 
 const ProjectsList = ({ web3, campaignFactory, campaignsNum }) => {
-  const [campaigns, setCampaigns] = useState([]);
+  const [campaigns, setCampaigns] = useState(null);
 
   useEffect(() => {
     (async () => {
       let _campaigns = [];
+
       for (let i = campaignsNum - 1; i >= 0; i--) {
         const address = await campaignFactory.methods
           .campaignAddresses(i)
@@ -26,29 +27,43 @@ const ProjectsList = ({ web3, campaignFactory, campaignsNum }) => {
         Campaign.endTime = await _campaign.methods.endTime().call();
         _campaigns.push(Campaign);
       }
-      setCampaigns(_campaigns);
+      campaignsNum >= 0 && setCampaigns(_campaigns);
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [campaignsNum]);
 
-  if (campaigns.length === 0)
+  if (!campaigns)
     return <Loading height="400px" msg="Loading Latest Projects" />;
 
+  if (campaigns.length === 0)
+    return (
+      <Box py="3">
+        <Typography variant="h2" align="center">
+          {" "}
+          No Projects Yet ....{" "}
+        </Typography>
+      </Box>
+    );
+
   return (
-    <Grid container>
-      {campaigns.map(c => (
-        <Grid item key={c.index}>
-          <ProjectCard
-            index={c.index}
-            title={c.title}
-            description={c.description}
-            imgUrl={c.imgUrl}
-            goal={c.goal}
-            totalFunds={c.totalFunds}
-            state={c.state}
-          />
-        </Grid>
-      ))}
-    </Grid>
+    <>
+      <Typography variant="h2">Latest Projects:</Typography>
+      <Grid container>
+        {campaigns.map(c => (
+          <Grid item key={c.index}>
+            <ProjectCard
+              index={c.index}
+              title={c.title}
+              description={c.description}
+              imgUrl={c.imgUrl}
+              goal={c.goal}
+              totalFunds={c.totalFunds}
+              state={c.state}
+            />
+          </Grid>
+        ))}
+      </Grid>
+    </>
   );
 };
 

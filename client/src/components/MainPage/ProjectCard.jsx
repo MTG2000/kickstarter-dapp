@@ -1,15 +1,13 @@
 import React from "react";
 import Image from "../Image";
-import image from "../MainPage/imgs/gears-5.jpg";
 import { Box, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
 const ProjectCard = props => {
-  const { index, title, imgUrl, goal, totalFunds } = props;
+  const { index, title, imgUrl } = props;
+  // const { index, title, imgUrl, goal, totalFunds } = props;
 
   const urlTitle = title.replace(/ /g, "-").toLowerCase();
-  console.log(totalFunds);
-  console.log(goal);
 
   return (
     <Link to={`/projects/${index}/${urlTitle}`}>

@@ -50,7 +50,7 @@ contract("CampaignFactory", ([owner, funder1, funder2]) => {
       assert.notEqual(failingCampaign, null);
     });
 
-    it("should reject deploying Campaign", async () => {
+    it("should reject deploying Campaign with not enough value", async () => {
       await campaignFactory.newCampaign(
         "The Witcher 4",
         "the sequel that you all waited",

@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense, lazy } from "react";
 import Header from "./components/layouts/Header";
 import Footer from "./components/layouts/Footer";
-import { Container, Box, Typography } from "@material-ui/core";
-import MainPage from "./components/MainPage";
+import { Container, Box } from "@material-ui/core";
 import getWeb3 from "./utils/getWeb3";
 import { Route, Switch } from "react-router-dom";
-import ProjectPage from "./components/ProjectPage";
 import { CampaignFactoryABI, CampaignFactoryAddress } from "./utils/contracts";
 import Loading from "./components/layouts/Loading";
+
+const MainPage = lazy(() => import("./components/MainPage"));
+const NewProjectPage = lazy(() => import("./components/NewProjectPage"));
+const ProjectPage = lazy(() => import("./components/ProjectPage"));
 
 function App() {
   const [account, setAccount] = useState("");
@@ -32,6 +34,7 @@ function App() {
         setInterval(() => checkAccount(web3), 1000);
       }
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [web3]);
 
   //Check every amount of seconds if the metamask account has changed
@@ -48,30 +51,42 @@ function App() {
     <div className="App">
       <Header />
       <Container>
-        <Box my={15}>
-          <Switch>
-            <Route
-              path="/projects/:index/:title"
-              component={p => (
-                <ProjectPage
-                  web3={web3}
-                  account={account}
-                  campaignFactory={campaignFactory}
-                  {...p}
-                />
-              )}
-            />
-            <Route
-              path="/"
-              component={() => (
-                <MainPage
-                  web3={web3}
-                  account={account}
-                  campaignFactory={campaignFactory}
-                />
-              )}
-            />
-          </Switch>
+        <Box py={15}>
+          <Suspense fallback={<Loading msg="Loading Page" />}>
+            <Switch>
+              <Route
+                path="/projects/new"
+                component={() => (
+                  <NewProjectPage
+                    web3={web3}
+                    account={account}
+                    campaignFactory={campaignFactory}
+                  />
+                )}
+              />
+              <Route
+                path="/projects/:index/:title"
+                component={p => (
+                  <ProjectPage
+                    web3={web3}
+                    account={account}
+                    campaignFactory={campaignFactory}
+                    {...p}
+                  />
+                )}
+              />
+              <Route
+                path="/"
+                component={() => (
+                  <MainPage
+                    web3={web3}
+                    account={account}
+                    campaignFactory={campaignFactory}
+                  />
+                )}
+              />
+            </Switch>
+          </Suspense>
         </Box>
       </Container>
       <Footer />

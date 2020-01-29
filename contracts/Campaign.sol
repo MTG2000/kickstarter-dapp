@@ -45,10 +45,14 @@ contract Campaign is Ownable {
         address _owner
     ) public {
         require(
-            _campaignDuration > 0,
-            "the campaign duration has to be greater than 0"
+            _campaignDuration > 0 && _campaignDuration <= 1730000,
+            "the campaign duration has to be greater than 0 and les than 20 days"
         );
-        require(_goal > 0, "the campaign goal has to be greater than zero");
+        require(
+            _goal > 0 && _goal <= 10000000 ether,
+            "the campaign goal has to be greater than zero"
+        );
+
         transferOwnership(_owner);
         gameTitle = _gameTitle;
         description = _description;

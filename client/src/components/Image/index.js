@@ -37,8 +37,8 @@ const useStyles = makeStyles({
 });
 
 //Example For A Use
-{
-  /*
+
+/*
   <Image
                 src={image}
                 StyleImgWrapper={{ width: 350, height: 196, padding: 4 }}
@@ -46,7 +46,6 @@ const useStyles = makeStyles({
                 pointerOnHover
               />
  */
-}
 
 const Image = ({
   src,

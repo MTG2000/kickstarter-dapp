@@ -37,9 +37,8 @@ const ProjectPage = props => {
         goal,
         endTime
       });
-
-      // setTitle(title);
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fund = async value => {
@@ -67,6 +66,7 @@ const ProjectPage = props => {
   let fundsPercent = totalFunds / goal;
   if (fundsPercent >= 1) fundsPercent = 100;
   else fundsPercent *= 100;
+  fundsPercent = fundsPercent.toFixed(1);
 
   const endDate = date.format(new Date(+endTime * 1000), "YYYY/MM/DD HH:mm");
 
@@ -93,33 +93,7 @@ const ProjectPage = props => {
             Details about the project
           </Typography>
           <Typography variant="h6" gutterBottom>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Modi animi
-            ab voluptatum facilis eos, debitis eveniet illum distinctio
-            adipisci, perspiciatis delectus, porro ipsam veritatis totam at sit
-            rerum corrupti iusto labore nesciunt ea maiores quam rem deleniti?
-            Iste, sed aut veniam rerum, explicabo laboriosam, quam nam omnis
-            excepturi minima dignissimos voluptas earum debitis praesentium
-            temporibus illo vero fuga voluptatum perferendis incidunt nobis
-            reprehenderit! Iusto consequuntur cupiditate debitis commodi, esse
-            aliquid nemo dolore maiores facilis aliquam ipsum culpa laudantium
-            nostrum labore saepe tempore recusandae. Illo, pariatur nemo nisi
-            odio sunt iusto rem eaque commodi doloremque laboriosam blanditiis
-            optio nesciunt ipsa aliquid molestiae distinctio aliquam unde sit
-            culpa error esse? Ad temporibus aliquid magni cupiditate aperiam
-            cum, nostrum accusamus cumque similique assumenda asperiores
-            repellat, vitae ab saepe vero, autem eius? Quam eos deserunt,
-            architecto consequuntur dignissimos distinctio iste excepturi
-            voluptatum consectetur at tempora ex alias nobis fugit deleniti?
-            Voluptatibus hic magnam tenetur totam deleniti dolor eligendi
-            molestias incidunt atque earum? Ullam dolorum nesciunt, velit
-            repudiandae exercitationem officiis fugit ad, laudantium maiores
-            atque dolore animi reiciendis architecto in illum amet itaque
-            mollitia, quidem labore. Expedita, ex excepturi? Impedit quo ea
-            dolorem officia ipsum laboriosam vel itaque labore tenetur nostrum
-            eveniet perferendis corporis nihil soluta, cumque temporibus nobis
-            laborum blanditiis quasi minima illum! Animi facilis rerum adipisci
-            sunt repellat. Ex impedit architecto blanditiis magnam corrupti
-            illum.
+            {description}
           </Typography>
         </Grid>
         <Grid item container xs={12} md={4} justify="center">
