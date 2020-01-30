@@ -1,6 +1,9 @@
 - add container files
 - add the ability to withdraw if owner
-
-
+- show if a contract has failed
+- add a navbar
+- add a refund and withdraw button to project page
+- refactor loading the web3,contracts,account to a seperate function
+- choosing a font and a theme
 
 "Metal Gear Solid VI ","The Game we will never get","https://cdn3.whatculture.com/images/2016/01/6T9nCbiI.jpg",2000000000000000000,18000

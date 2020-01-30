@@ -45,7 +45,8 @@ function App() {
     }
   };
 
-  if (!account) return <Loading msg="Loading Web3 and accounts" />;
+  if (!account || !campaignFactory)
+    return <Loading msg="Loading Web3 and accounts" />;
 
   return (
     <div className="App">
