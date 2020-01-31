@@ -7,11 +7,16 @@ function Alert(props) {
 }
 
 const Notification = (options = {}) => {
-  console.log(options);
-  const { msg = "Hello World", open = false, handleClose = () => {} } = options;
+  const {
+    msg = "Hello World",
+    open = false,
+    handleClose = () => {},
+    type = "info"
+  } = options;
+
   return (
     <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-      <Alert onClose={handleClose} severity="success">
+      <Alert onClose={handleClose} severity={type}>
         {msg}
       </Alert>
     </Snackbar>

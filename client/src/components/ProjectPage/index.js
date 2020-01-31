@@ -65,30 +65,55 @@ const ProjectPage = props => {
   const fund = async value => {
     setDialogOpen(false);
     if (!value) return;
-    await campaign.methods.fund().send({
-      from: account,
-      value: web3.utils.toWei(value.toString(), "Ether")
-    });
-    alert("transaction Sent !!");
+    try {
+      await campaign.methods.fund().send({
+        from: account,
+        value: web3.utils.toWei(value.toString(), "Ether")
+      });
+      setNotification({
+        open: true,
+        msg: "Successfully Sent Money",
+        type: "success"
+      });
+    } catch (error) {
+      setNotification({
+        open: true,
+        msg: "Couldn't Send Money",
+        type: "error"
+      });
+    }
   };
 
   const handleWithdraw = async () => {
     try {
       await campaign.methods.withdraw().send({ from: account });
-      alert("Withdraw successfully");
+      setNotification({
+        open: true,
+        msg: "Successfully Withdrawn",
+        type: "success"
+      });
     } catch (error) {
-      alert("Cant withdraw now");
+      setNotification({
+        open: true,
+        msg: "You cant Withdraw until the campaign Successed",
+        type: "error"
+      });
     }
   };
 
   const handleRefund = async () => {
     try {
       await campaign.methods.refund().send({ from: account });
-      alert("Withdraw successfully");
+      setNotification({
+        open: true,
+        msg: "Successfully Refunded",
+        type: "success"
+      });
     } catch (error) {
       setNotification({
         open: true,
-        msg: "You cant withdraw until the campaig"
+        msg: "You can only Refund if the campaign fail",
+        type: "error"
       });
     }
   };
@@ -120,8 +145,7 @@ const ProjectPage = props => {
         {...projectDetails}
       />
       <Notification
-        msg={notification.msg}
-        open={notification.open}
+        {...notification}
         handleClose={() => setNotification({ ...notification, open: false })}
       />
     </>

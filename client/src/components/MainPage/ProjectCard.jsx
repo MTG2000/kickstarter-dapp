@@ -30,7 +30,7 @@ const ProjectCard = props => {
   const classes = useStyle({ fundsPercent, ...theme });
   return (
     <Link to={`/projects/${index}/${urlTitle}`}>
-      <Box mx={4} my={5} maxWidth={350} className={classes.root}>
+      <Box mx={2} my={5} maxWidth={350} className={classes.root}>
         <Image
           src={imgUrl}
           StyleImgWrapper={{

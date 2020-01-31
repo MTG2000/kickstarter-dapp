@@ -1,12 +1,9 @@
 - add container files
-- add the ability to withdraw if owner
 - show if a contract has failed
 - add a navbar
 - refactor loading the web3,contracts,account to a seperate function
 - choosing a font and a theme
-- add notifications
 - set the time of new projects back to normal
-- change the circular progress bar
 
 https://i.ytimg.com/vi/7-TLMv9IzR8/maxresdefault.jpg
 

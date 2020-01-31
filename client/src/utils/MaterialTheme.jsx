@@ -13,10 +13,8 @@ const theme = createMuiTheme({
     secondary: {
       main: "#1de9b6"
       // dark: will be calculated from palette.secondary.main,
-    },
-    success: {
-      main: "rgba(76, 223, 76, 1)"
     }
+
     // error: will use the default color
   }
 });
