@@ -15,7 +15,8 @@ const NewProjectPage = ({ web3, account, campaignFactory }) => {
         description,
         image,
         web3.utils.toWei(goal.toString(), "Ether"),
-        +duration * 24 * 3600 //convert to seconds
+        // +duration * 24 * 3600 //convert to seconds
+        +duration * 240 //convert to seconds
       )
       .send({ from: account, value: campaignPrice });
   };

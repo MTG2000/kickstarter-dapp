@@ -66,19 +66,31 @@ contract("CampaignFactory", ([owner, funder1, funder2]) => {
       assert.equal(gameTitle, "The Witcher 4");
     });
 
-    it("should accept funds", async () => {
+    it("should accept funds from funder 1", async () => {
       await campaign.fund({
         from: funder1,
         value: web3.utils.toWei("1", "Ether")
       });
-      await campaign.fund({
-        from: funder2,
-        value: web3.utils.toWei("1", "Ether")
-      });
+
       await failingCampaign.fund({
         from: funder1,
         value: web3.utils.toWei("1", "Ether")
       });
+    });
+
+    it("should not withdraw if goal not reached yet ", async () => {
+      await campaign.withdraw({ from: owner }).should.be.rejected;
+    });
+
+    it("should accept funds from funder 2", async () => {
+      await campaign.fund({
+        from: funder2,
+        value: web3.utils.toWei("1", "Ether")
+      });
+    });
+
+    it("should  withdraw if goal  reached  ", async () => {
+      await campaign.withdraw({ from: owner });
     });
 
     it("should not accept funds from owner", async () => {
@@ -102,11 +114,8 @@ contract("CampaignFactory", ([owner, funder1, funder2]) => {
     });
 
     (async () => {
-      return; //remove this line if you want to test the post end   // tests but make sure to put a long enough delay
+      // return; //remove this line if you want to test the post end   // tests but make sure to put a long enough delay
 
-      it("should not withdraw before success", async () => {
-        await campaign.withdraw({ from: owner }).should.be.rejected;
-      });
       it("should refund after fail", async () => {
         await delay(10000);
         await failingCampaign.refund({ from: funder1 });

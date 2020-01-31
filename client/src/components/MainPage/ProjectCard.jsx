@@ -11,7 +11,7 @@ const useStyle = makeStyles({
     position: "absolute",
     bottom: "100%",
     left: 0,
-    width: props.fundsPercent,
+    width: `${props.fundsPercent}%`,
     height: 7,
     background: props.palette.primary.main
   })

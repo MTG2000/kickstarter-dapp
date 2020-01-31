@@ -4,7 +4,6 @@ import "@openzeppelin/contracts/ownership/Ownable.sol";
 
 contract Campaign is Ownable {
     enum State {Successeded, Failed, Running}
-
     // Game's info:
     string public gameTitle = "game title";
     string public description = "some descrition for the game";
@@ -14,13 +13,13 @@ contract Campaign is Ownable {
     uint256 public endTime;
     uint256 public totalFunds = 0;
     State public state = State.Running;
-    mapping(address => uint256) funds;
+    mapping(address => uint256) public funds;
 
     function checkState() private {
         //if campaign ended & the state hasnt been set yet , set the new state
-        if (state == State.Running && now > endTime) {
-            if (totalFunds >= goal) state = State.Successeded;
-            else state = State.Failed;
+        if (state == State.Running ) {
+            if(totalFunds >= goal ) state = State.Successeded;
+            else if (now > endTime) state = State.Failed;
         }
     }
 

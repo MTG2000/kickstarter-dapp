@@ -1,12 +1,15 @@
 import React from "react";
 import { Typography, Grid, Box, Button } from "@material-ui/core";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import Image from "../Image";
 import FundDialog from "./FundDialog";
+import CircularProgressBarSeperated from "./CircularProgressBarSeperated";
 
 const ProjectDetails = ({
   dialogOpen,
+  setDialogOpen,
   fund,
+  handleRefund,
+  handleWithdraw,
   title,
   imgUrl,
   description,
@@ -14,7 +17,8 @@ const ProjectDetails = ({
   goal,
   totalFunds,
   endDate,
-  setDialogOpen
+  isOwner,
+  amountDonated
 }) => {
   return (
     <div>
@@ -50,37 +54,8 @@ const ProjectDetails = ({
             pt={4}
             pb={4}
           >
-            <CircularProgressbar
-              value={fundsPercent}
-              //text={`${fundsPercent}%`}
-              strokeWidth={50}
-              styles={buildStyles({
-                // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
-                strokeLinecap: "butt",
-
-                // Text size
-                textSize: "16px",
-
-                // How long animation takes to go from one percentage to another, in seconds
-                pathTransitionDuration: 0.5,
-
-                // Can specify path transition in more detail, or remove it entirely
-                // pathTransition: 'none',
-                // Colors
-                pathColor: `rgba(76, 223, 76,1)`,
-                textColor: "#FFF",
-                trailColor: "rgba(76, 223, 76,.33)"
-              })}
-            />
-            <Typography
-              variant="h4"
-              align="center"
-              gutterBottom
-              style={{ color: "#24a017", marginBottom: 20 }}
-            >
-              {fundsPercent}% Reached!
-            </Typography>
-
+            <CircularProgressBarSeperated value={fundsPercent} />
+            <Box py={5} />
             <Grid item xs={12} color="primary">
               <Typography
                 variant="h6"
@@ -116,15 +91,55 @@ const ProjectDetails = ({
               <Typography variant="h6" align="center" gutterBottom>
                 {endDate}
               </Typography>
-              <Grid container justify="center" style={{ marginTop: 22 }}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  size="large"
-                  onClick={() => setDialogOpen(true)}
-                >
-                  Become a Kickstarter !!!
-                </Button>
+              <Grid
+                container
+                justify="center"
+                alignItems="center"
+                direction="column"
+                style={{ marginTop: 22 }}
+              >
+                {!isOwner && +amountDonated === 0 && (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    onClick={() => setDialogOpen(true)}
+                  >
+                    Become a Kickstarter !!!
+                  </Button>
+                )}
+                {!isOwner && +amountDonated !== 0 && (
+                  <>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      size="large"
+                      onClick={() => setDialogOpen(true)}
+                    >
+                      Support Us More!!!
+                    </Button>
+                    <br />
+
+                    <Button
+                      variant="contained"
+                      color="default"
+                      size="large"
+                      onClick={handleRefund}
+                    >
+                      Refund
+                    </Button>
+                  </>
+                )}
+                {isOwner && (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    onClick={handleWithdraw}
+                  >
+                    Withdraw
+                  </Button>
+                )}
               </Grid>
             </Grid>
           </Box>
