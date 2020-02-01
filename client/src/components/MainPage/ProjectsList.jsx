@@ -28,10 +28,24 @@ const ProjectsList = ({ getCampaigns }) => {
 
   return (
     <>
-      <Typography variant="h2">Latest Projects:</Typography>
-      <Grid container>
-        {campaigns.map(c => (
-          <Grid item key={c.index}>
+      <Grid container justify="space-between">
+        {campaigns.slice(0, 2).map(c => (
+          <Grid item xs={12} md={6} key={c.index}>
+            <ProjectCard
+              index={c.index}
+              title={c.title}
+              description={c.description}
+              imgUrl={c.imgUrl}
+              goal={c.goal}
+              totalFunds={c.totalFunds}
+              state={c.state}
+              large
+            />
+          </Grid>
+        ))}
+
+        {campaigns.slice(2).map(c => (
+          <Grid item xs={12} md={4} key={c.index}>
             <ProjectCard
               index={c.index}
               title={c.title}

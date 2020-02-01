@@ -29,12 +29,12 @@ const ProjectCard = props => {
   const classes = useStyle({ fundsPercent, ...theme });
   return (
     <Link to={`/projects/${index}/${urlTitle}`}>
-      <Box mx={2} my={5} minWidth={300} className={classes.root}>
+      <Box mx={2} my={5} minWidth={300} maxWidth={350} className={classes.root}>
         <Image
           src={imgUrl}
           StyleImgWrapper={{
             width: "100%",
-            heigt: props.large ? 720 : 190,
+            height: 200,
             padding: 0
           }}
           hoverColor="rgba(0, 0, 0, 0.377)"

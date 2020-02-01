@@ -5,7 +5,7 @@ import date from "date-and-time";
 
 import Loading from "../layouts/Loading";
 import ProjectDetails from "./ProjectDetails";
-import { Typography, Box } from "@material-ui/core";
+import { Typography, Box, Container } from "@material-ui/core";
 import Notification from "../Notification";
 
 const ProjectPage = props => {
@@ -133,22 +133,25 @@ const ProjectPage = props => {
   const endDate = date.format(new Date(+endTime * 1000), "YYYY/MM/DD HH:mm");
 
   return (
-    <>
-      <ProjectDetails
-        dialogOpen={dialogOpen}
-        fund={fund}
-        setDialogOpen={setDialogOpen}
-        handleWithdraw={handleWithdraw}
-        handleRefund={handleRefund}
-        fundsPercent={fundsPercent}
-        endDate={endDate}
-        {...projectDetails}
-      />
-      <Notification
-        {...notification}
-        handleClose={() => setNotification({ ...notification, open: false })}
-      />
-    </>
+    <Container>
+      <Box py={10}>
+        {" "}
+        <ProjectDetails
+          dialogOpen={dialogOpen}
+          fund={fund}
+          setDialogOpen={setDialogOpen}
+          handleWithdraw={handleWithdraw}
+          handleRefund={handleRefund}
+          fundsPercent={fundsPercent}
+          endDate={endDate}
+          {...projectDetails}
+        />
+        <Notification
+          {...notification}
+          handleClose={() => setNotification({ ...notification, open: false })}
+        />
+      </Box>
+    </Container>
   );
 };
 

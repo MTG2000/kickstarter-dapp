@@ -1,49 +1,30 @@
 import React, { useEffect, useState, Suspense, lazy } from "react";
 import Header from "./components/layouts/Header";
 import Footer from "./components/layouts/Footer";
-import { Container, Box } from "@material-ui/core";
-import getWeb3 from "./utils/getWeb3";
+import { Box } from "@material-ui/core";
 import { Route, Switch } from "react-router-dom";
 import { CampaignFactoryABI, CampaignFactoryAddress } from "./utils/contracts";
 import Loading from "./components/layouts/Loading";
+import withWeb3 from "./utils/Web3Provider";
 
 const MainPage = lazy(() => import("./components/MainPage"));
 const NewProjectPage = lazy(() => import("./components/NewProjectPage"));
 const ProjectPage = lazy(() => import("./components/ProjectPage"));
 
-function App() {
-  const [account, setAccount] = useState("");
-  const [web3, setWeb3] = useState(null);
+function App({ web3, account }) {
   const [campaignFactory, setCampaignFactory] = useState(null);
 
-  //Set the web3 obj and assign the accounts
   useEffect(() => {
     (async () => {
-      if (!web3) {
-        const web3 = await getWeb3();
-        setWeb3(web3);
-
-        //   Setting the Campaign Factory Contract
-        let instance = new web3.eth.Contract(
+      if (web3) {
+        const _campaignFactory = new web3.eth.Contract(
           CampaignFactoryABI,
           CampaignFactoryAddress
         );
-        setCampaignFactory(instance);
-      } else {
-        checkAccount(web3);
-        setInterval(() => checkAccount(web3), 1000);
+        setCampaignFactory(_campaignFactory);
       }
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [web3]);
-
-  //Check every amount of seconds if the metamask account has changed
-  const checkAccount = async web3 => {
-    const accounts = await web3.eth.getAccounts();
-    if (account !== accounts[0]) {
-      setAccount(accounts[0]);
-    }
-  };
 
   if (!account || !campaignFactory)
     return <Loading msg="Loading Web3 and accounts" />;
@@ -51,48 +32,46 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <Container>
-        <Box py={15}>
-          <Suspense fallback={<Loading msg="Loading Page" />}>
-            <Switch>
-              <Route
-                path="/projects/new"
-                component={() => (
-                  <NewProjectPage
-                    web3={web3}
-                    account={account}
-                    campaignFactory={campaignFactory}
-                  />
-                )}
-              />
-              <Route
-                path="/projects/:index/:title"
-                component={p => (
-                  <ProjectPage
-                    web3={web3}
-                    account={account}
-                    campaignFactory={campaignFactory}
-                    {...p}
-                  />
-                )}
-              />
-              <Route
-                path="/"
-                component={() => (
-                  <MainPage
-                    web3={web3}
-                    account={account}
-                    campaignFactory={campaignFactory}
-                  />
-                )}
-              />
-            </Switch>
-          </Suspense>
-        </Box>
-      </Container>
+      <Box pb={10}>
+        <Suspense fallback={<Loading msg="Loading Page" />}>
+          <Switch>
+            <Route
+              path="/projects/new"
+              component={() => (
+                <NewProjectPage
+                  web3={web3}
+                  account={account}
+                  campaignFactory={campaignFactory}
+                />
+              )}
+            />
+            <Route
+              path="/projects/:index/:title"
+              component={p => (
+                <ProjectPage
+                  web3={web3}
+                  account={account}
+                  campaignFactory={campaignFactory}
+                  {...p}
+                />
+              )}
+            />
+            <Route
+              path="/"
+              component={() => (
+                <MainPage
+                  web3={web3}
+                  account={account}
+                  campaignFactory={campaignFactory}
+                />
+              )}
+            />
+          </Switch>
+        </Suspense>
+      </Box>
       <Footer />
     </div>
   );
 }
 
-export default App;
+export default withWeb3(App);

@@ -1,8 +1,10 @@
 import React from "react";
-import { Container } from "@material-ui/core";
+import { Container, Box, Typography } from "@material-ui/core";
 
 import ProjectsList from "./ProjectsList";
 import { CampaignABI } from "../../utils/contracts";
+
+import CallToAction from "./CallToAction";
 
 const MainPage = ({ web3, campaignFactory }) => {
   // a function that fetch all projects from the blockchain
@@ -30,9 +32,17 @@ const MainPage = ({ web3, campaignFactory }) => {
   };
 
   return (
-    <Container>
-      <ProjectsList getCampaigns={getCampaigns} />
-    </Container>
+    <>
+      <CallToAction />
+      <Container>
+        <Box pt={20} pb={5}>
+          <Typography variant="h2" color="textSecondary">
+            Latest Projects:
+          </Typography>
+          <ProjectsList getCampaigns={getCampaigns} />
+        </Box>
+      </Container>
+    </>
   );
 };
 
