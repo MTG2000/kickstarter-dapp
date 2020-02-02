@@ -30,7 +30,7 @@ const ProjectsList = ({ getCampaigns }) => {
     <>
       <Grid container justify="space-between">
         {campaigns.slice(0, 2).map(c => (
-          <Grid item xs={12} md={6} key={c.index}>
+          <Grid item xs={12} sm={6} key={c.index}>
             <ProjectCard
               index={c.index}
               title={c.title}
@@ -45,7 +45,7 @@ const ProjectsList = ({ getCampaigns }) => {
         ))}
 
         {campaigns.slice(2).map(c => (
-          <Grid item xs={12} md={4} key={c.index}>
+          <Grid item xs={12} sm={5} md={4} key={c.index}>
             <ProjectCard
               index={c.index}
               title={c.title}

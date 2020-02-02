@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography, Grid, Box, Button } from "@material-ui/core";
-import Image from "../Image";
+import Image from "../Image/Image";
 import FundDialog from "./FundDialog";
 import CircularProgressBarSeperated from "./CircularProgressBarSeperated";
 
@@ -18,7 +18,8 @@ const ProjectDetails = ({
   totalFunds,
   endDate,
   isOwner,
-  amountDonated
+  amountDonated,
+  campaignFailed
 }) => {
   return (
     <div>
@@ -91,6 +92,16 @@ const ProjectDetails = ({
               <Typography variant="h6" align="center" gutterBottom>
                 {endDate}
               </Typography>
+              {campaignFailed && (
+                <Typography
+                  variant="h5"
+                  align="center"
+                  gutterBottom
+                  color="error"
+                >
+                  Campaign Failed!!
+                </Typography>
+              )}
               <Grid
                 container
                 justify="center"
@@ -98,7 +109,7 @@ const ProjectDetails = ({
                 direction="column"
                 style={{ marginTop: 22 }}
               >
-                {!isOwner && +amountDonated === 0 && (
+                {!isOwner && +amountDonated === 0 && !campaignFailed && (
                   <Button
                     variant="contained"
                     color="primary"
@@ -110,24 +121,28 @@ const ProjectDetails = ({
                 )}
                 {!isOwner && +amountDonated !== 0 && (
                   <>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      size="large"
-                      onClick={() => setDialogOpen(true)}
-                    >
-                      Support Us More!!!
-                    </Button>
+                    {!campaignFailed && (
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        size="large"
+                        onClick={() => setDialogOpen(true)}
+                      >
+                        Support Us More!!!
+                      </Button>
+                    )}
                     <br />
 
-                    <Button
-                      variant="contained"
-                      color="default"
-                      size="large"
-                      onClick={handleRefund}
-                    >
-                      Refund
-                    </Button>
+                    {campaignFailed && (
+                      <Button
+                        variant="contained"
+                        color="default"
+                        size="large"
+                        onClick={handleRefund}
+                      >
+                        Refund
+                      </Button>
+                    )}
                   </>
                 )}
                 {isOwner && (

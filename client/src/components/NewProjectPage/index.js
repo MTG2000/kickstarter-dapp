@@ -40,18 +40,20 @@ const NewProjectPage = ({ web3, account, campaignFactory }) => {
 
   if (redirect) return <Redirect to="/" />;
   return (
-    <Container>
-      <Typography variant="h2" component="h1" color="primary" align="center">
-        Start A Campaign
-      </Typography>
-      <Box maxWidth={400} mx={"auto"} mt={10}>
-        <ProjectForm onSubmit={onSubmit} />
-      </Box>
-      <Notification
-        {...notification}
-        handleClose={() => setNotification({ ...notification, open: false })}
-      />
-    </Container>
+    <Box py={10}>
+      <Container>
+        <Typography variant="h2" component="h1" color="primary" align="center">
+          Start A Campaign
+        </Typography>
+        <Box maxWidth={400} mx={"auto"} mt={10}>
+          <ProjectForm onSubmit={onSubmit} />
+        </Box>
+        <Notification
+          {...notification}
+          handleClose={() => setNotification({ ...notification, open: false })}
+        />
+      </Container>
+    </Box>
   );
 };
 

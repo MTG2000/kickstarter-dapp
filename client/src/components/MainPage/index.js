@@ -1,15 +1,16 @@
 import React from "react";
-import { Container, Box, Typography } from "@material-ui/core";
-
+import { Container, Box, Typography, Grid, Button } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import ProjectsList from "./ProjectsList";
 import { CampaignABI } from "../../utils/contracts";
 
 import CallToAction from "./CallToAction";
+import About from "./About";
 
 const MainPage = ({ web3, campaignFactory }) => {
   // a function that fetch all projects from the blockchain
   const getCampaigns = async (options = {}) => {
-    const { limit = 10 } = options;
+    const { limit = 8 } = options;
     const campaignsNum = await campaignFactory.methods.campaignsCount().call();
 
     let _campaigns = [];
@@ -42,6 +43,29 @@ const MainPage = ({ web3, campaignFactory }) => {
           <ProjectsList getCampaigns={getCampaigns} />
         </Box>
       </Container>
+      <About />
+      <Grid container justify="center" style={{ padding: "50px 0" }}>
+        <Grid item xs={12}>
+          <Typography
+            variant="h4"
+            color="textSecondary"
+            align="center"
+            gutterBottom
+          >
+            Crowdfunding a Game has Never Been Easier!!
+          </Typography>
+        </Grid>
+        <Link to="/projects/new">
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            style={{ fontSize: "1.8em" }}
+          >
+            Start A Campaign
+          </Button>
+        </Link>
+      </Grid>
     </>
   );
 };

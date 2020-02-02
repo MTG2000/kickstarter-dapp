@@ -27,12 +27,12 @@ const useStyles = makeStyles({
     },
     ...StyleImgWrapper
   }),
-  img: ({ Style }) => ({
+  img: ({ StyleImg }) => ({
     width: "100%",
     height: "100%",
     objectFit: "cover",
     objectPosition: "center top",
-    ...Style
+    ...StyleImg
   })
 });
 

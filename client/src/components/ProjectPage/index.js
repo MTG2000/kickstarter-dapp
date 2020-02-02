@@ -78,7 +78,7 @@ const ProjectPage = props => {
     } catch (error) {
       setNotification({
         open: true,
-        msg: "Couldn't Send Money",
+        msg: "Couldn't Send Money, Make Sure The Campaign hasn't Failed",
         type: "error"
       });
     }
@@ -130,7 +130,12 @@ const ProjectPage = props => {
     fundsPercent = fundsPercent.toFixed(1);
   }
 
-  const endDate = date.format(new Date(+endTime * 1000), "YYYY/MM/DD HH:mm");
+  const campaignFailed =
+    Date.now() > new Date(+endTime * 1000) &&
+    totalFunds < goal &&
+    web3.utils.toBN(`${totalFunds}`) < web3.utils.toBN(`${goal}`);
+
+  const endDate = date.format(new Date(+endTime * 1000), "YYYY/MM/DD");
 
   return (
     <Container>
@@ -144,6 +149,7 @@ const ProjectPage = props => {
           handleRefund={handleRefund}
           fundsPercent={fundsPercent}
           endDate={endDate}
+          campaignFailed={campaignFailed}
           {...projectDetails}
         />
         <Notification

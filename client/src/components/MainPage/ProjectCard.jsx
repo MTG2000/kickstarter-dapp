@@ -1,7 +1,7 @@
 import React from "react";
-import Image from "../Image";
 import { Box, Typography, makeStyles, useTheme } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import ImageFixedAspect from "../ImageFixedAspect/ImageFixedAspect";
 
 const useStyle = makeStyles({
   root: {
@@ -30,13 +30,8 @@ const ProjectCard = props => {
   return (
     <Link to={`/projects/${index}/${urlTitle}`}>
       <Box mx={2} my={5} minWidth={300} className={classes.root}>
-        <Image
+        <ImageFixedAspect
           src={imgUrl}
-          StyleImgWrapper={{
-            width: "100%",
-            heigt: props.large ? 720 : 190,
-            padding: 0
-          }}
           hoverColor="rgba(0, 0, 0, 0.377)"
           pointerOnHover
         />
