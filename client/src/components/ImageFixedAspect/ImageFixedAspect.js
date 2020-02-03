@@ -7,12 +7,12 @@ const useStyles = makeStyles({
     height: "auto",
     maxWidth: "none",
     maxHeight: "none",
-    padding: 2,
     background: "#f1f1f1",
     margin: "0",
     position: "relative",
     paddingTop: "56.25%" /* 16:9 Aspect Ratio */,
     cursor: pointerOnHover ? "pointer" : "default",
+    overflow: "hidden",
     "&::after": {
       content: '""',
       display: "block",
@@ -47,7 +47,7 @@ const useStyles = makeStyles({
 //Example For A Use
 
 /*
-  <Image
+  <ImageFixedAspect
                 src={image}
                 StyleImgWrapper={{ width: 350, height: 196, padding: 4 }}
                 hoverColor="rgba(0, 0, 0, 0.777)"

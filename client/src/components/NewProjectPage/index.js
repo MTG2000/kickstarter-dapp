@@ -32,7 +32,7 @@ const NewProjectPage = ({ web3, account, campaignFactory }) => {
     } catch (error) {
       setNotification({
         open: true,
-        msg: "Successfully Sent Money",
+        msg: "Failed To Launch Campaign",
         type: "error"
       });
     }

@@ -4,7 +4,7 @@ import "@openzeppelin/contracts/ownership/Ownable.sol";
 import "./Campaign.sol";
 
 contract CampaignFactory is Ownable {
-    uint256 public campaignPrice = (1 ether) / 2;
+    uint256 public campaignPrice = (1 ether) / 4;
     address[] public campaignAddresses;
     uint256 public campaignsCount = 0;
 
@@ -29,6 +29,11 @@ contract CampaignFactory is Ownable {
         );
         campaignAddresses.push(address(_newCampaign));
         campaignsCount++;
+    }
+
+    function withdraw(uint256 amount) external onlyOwner {
+        require(amount <= address(this).balance, "Amount Larger Than Balance");
+        msg.sender.transfer(amount);
     }
 
 }

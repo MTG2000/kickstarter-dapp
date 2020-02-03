@@ -20,35 +20,39 @@ const ProjectPage = props => {
     msg: "Hello World"
   });
 
+  const getCampaign = async () => {
+    try {
+      const address = await campaignFactory.methods
+        .campaignAddresses(index)
+        .call();
+      const _campaign = new web3.eth.Contract(CampaignABI, address);
+      setCampaign(_campaign);
+      const title = await _campaign.methods.gameTitle().call();
+      const description = await _campaign.methods.description().call();
+      const imgUrl = await _campaign.methods.imgUrl().call();
+      const totalFunds = await _campaign.methods.totalFunds().call();
+      const goal = await _campaign.methods.goal().call();
+      const endTime = await _campaign.methods.endTime().call();
+      const owner = await _campaign.methods.owner().call();
+      const amountDonated = await _campaign.methods.funds(account).call();
+      setProjectDetails({
+        title,
+        description,
+        imgUrl,
+        totalFunds,
+        goal,
+        endTime,
+        amountDonated,
+        isOwner: owner === account
+      });
+    } catch (error) {
+      setGameNotFound(true);
+    }
+  };
+
   useEffect(() => {
     (async () => {
-      try {
-        const address = await campaignFactory.methods
-          .campaignAddresses(index)
-          .call();
-        const _campaign = new web3.eth.Contract(CampaignABI, address);
-        setCampaign(_campaign);
-        const title = await _campaign.methods.gameTitle().call();
-        const description = await _campaign.methods.description().call();
-        const imgUrl = await _campaign.methods.imgUrl().call();
-        const totalFunds = await _campaign.methods.totalFunds().call();
-        const goal = await _campaign.methods.goal().call();
-        const endTime = await _campaign.methods.endTime().call();
-        const owner = await _campaign.methods.owner().call();
-        const amountDonated = await _campaign.methods.funds(account).call();
-        setProjectDetails({
-          title,
-          description,
-          imgUrl,
-          totalFunds,
-          goal,
-          endTime,
-          amountDonated,
-          isOwner: owner === account
-        });
-      } catch (error) {
-        setGameNotFound(true);
-      }
+      getCampaign();
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -75,6 +79,9 @@ const ProjectPage = props => {
         msg: "Successfully Sent Money",
         type: "success"
       });
+      setTimeout(() => {
+        getCampaign();
+      }, 2000);
     } catch (error) {
       setNotification({
         open: true,
@@ -124,11 +131,9 @@ const ProjectPage = props => {
   const { totalFunds, goal, endTime } = projectDetails;
 
   let fundsPercent = totalFunds / goal;
-  if (fundsPercent >= 1) fundsPercent = 100;
-  else {
-    fundsPercent *= 100;
-    fundsPercent = fundsPercent.toFixed(1);
-  }
+
+  fundsPercent *= 100;
+  fundsPercent = fundsPercent.toFixed(1);
 
   const campaignFailed =
     Date.now() > new Date(+endTime * 1000) &&

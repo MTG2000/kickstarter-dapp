@@ -85,7 +85,7 @@ const About = () => {
           style={{ marginBottom: 35, color: "#FFF", lineHeight: "1.8em" }}
         >
           This is a Dapp applicatin which means that you need to use MetaMask
-          Browser extension to be able to interact with the applicatin
+          Browser extension to be able to Publish/Fund a campaign.
         </Typography>
       </Container>
     </Box>
