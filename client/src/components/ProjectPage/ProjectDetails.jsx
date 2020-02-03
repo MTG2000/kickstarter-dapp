@@ -1,5 +1,11 @@
 import React from "react";
-import { Typography, Grid, Box, Button } from "@material-ui/core";
+import {
+  Typography,
+  Grid,
+  Box,
+  Button,
+  CircularProgress
+} from "@material-ui/core";
 import Image from "../Image/Image";
 import FundDialog from "./FundDialog";
 import CircularProgressBarSeperated from "./CircularProgressBarSeperated";
@@ -19,7 +25,8 @@ const ProjectDetails = ({
   endDate,
   isOwner,
   amountDonated,
-  campaignFailed
+  campaignFailed,
+  pending
 }) => {
   return (
     <div>
@@ -157,6 +164,20 @@ const ProjectDetails = ({
                 )}
               </Grid>
             </Grid>
+            {pending && (
+              <Box px={3} py={4}>
+                <Grid container justify="center" alignItems="center">
+                  <Typography
+                    variant="h6"
+                    color="textSecondary"
+                    style={{ marginRight: 20 }}
+                  >
+                    Pending
+                  </Typography>
+                  <CircularProgress color="primary" />
+                </Grid>
+              </Box>
+            )}
           </Box>
         </Grid>
       </Grid>

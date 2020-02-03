@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 
 const FundDialog = ({ open, handleClose }) => {
-  const [amount, setAmount] = useState(0.01);
+  const [amount, setAmount] = useState(0.1);
   return (
     <Dialog onClose={() => handleClose()} open={open}>
       <DialogTitle id="simple-dialog-title">
@@ -25,7 +25,7 @@ const FundDialog = ({ open, handleClose }) => {
           margin="dense"
           onChange={(e, v) => setAmount(v)}
           step={0.01}
-          min={0.01}
+          min={0.05}
           max={2}
         />
         <Grid container justify="center">

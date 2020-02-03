@@ -11,6 +11,7 @@ import Notification from "../Notification";
 const ProjectPage = props => {
   const { match, web3, account, campaignFactory } = props;
   const { index } = match.params;
+  const [pending, setPending] = useState(false);
   const [campaign, setCampaign] = useState(null);
   const [projectDetails, setProjectDetails] = useState(null);
   const [totalFunds, setTotalFunds] = useState(null);
@@ -79,10 +80,13 @@ const ProjectPage = props => {
     setDialogOpen(false);
     if (!value) return;
     try {
+      setPending(true);
       await campaign.methods.fund().send({
         from: account,
         value: web3.utils.toWei(value.toString(), "Ether")
       });
+      setPending(false);
+
       setNotification({
         open: true,
         msg: "Successfully Sent Money",
@@ -134,6 +138,8 @@ const ProjectPage = props => {
   if (!projectDetails || !projectDetails.title)
     return <Loading height="70vh" msg="loading Project Data" />;
 
+  document.title = projectDetails.title + " Kickstarter Campaign";
+
   const { goal, endTime } = projectDetails;
   let fundsPercent = totalFunds / goal;
 
@@ -157,6 +163,7 @@ const ProjectPage = props => {
           fundsPercent={fundsPercent}
           endDate={endDate}
           campaignFailed={campaignFailed}
+          pending={pending}
           {...projectDetails}
           totalFunds={totalFunds}
         />

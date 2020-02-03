@@ -5,7 +5,9 @@ import {
   TextField,
   Typography,
   Slider,
-  makeStyles
+  makeStyles,
+  CircularProgress,
+  Box
 } from "@material-ui/core";
 
 const useStyles = makeStyles({
@@ -14,7 +16,7 @@ const useStyles = makeStyles({
   }
 });
 
-const ProjectForm = ({ onSubmit }) => {
+const ProjectForm = ({ onSubmit, pending }) => {
   const [title, setTitle] = useState({ value: "" });
   const [goal, setGoal] = useState({ value: 2 });
   const [duration, setDuration] = useState({ value: 10 });
@@ -125,6 +127,20 @@ const ProjectForm = ({ onSubmit }) => {
           Publish Campaign
         </Button>
       </Grid>
+      {pending && (
+        <Box px={3} py={4}>
+          <Grid container justify="center" alignItems="center">
+            <Typography
+              variant="h6"
+              color="textSecondary"
+              style={{ marginRight: 20 }}
+            >
+              Pending
+            </Typography>
+            <CircularProgress color="primary" />
+          </Grid>
+        </Box>
+      )}
     </form>
   );
 };

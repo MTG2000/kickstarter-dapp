@@ -8,6 +8,8 @@ import CallToAction from "./CallToAction";
 import About from "./About";
 
 const MainPage = ({ web3, campaignFactory }) => {
+  document.title = "KickStarter - A Platform to Support Creativity";
+
   // a function that fetch all projects from the blockchain
   const getCampaigns = async (options = {}) => {
     const { limit = 8 } = options;

@@ -9,6 +9,7 @@ const NewProjectPage = ({ web3, account, campaignFactory }) => {
     open: false,
     msg: "Hello World"
   });
+  const [pending, setPending] = useState(false);
   const [redirect, setRedirect] = useState(false);
 
   //Creates a new Campaing on the blockchain after reciving the data
@@ -18,14 +19,14 @@ const NewProjectPage = ({ web3, account, campaignFactory }) => {
       const campaignPrice = await campaignFactory.methods
         .campaignPrice()
         .call({});
+      setPending(true);
       await campaignFactory.methods
         .newCampaign(
           title,
           description,
           image,
           web3.utils.toWei(goal.toString(), "Ether"),
-          // +duration * 24 * 3600 //convert to seconds
-          +duration * 240 //convert to seconds
+          +duration * 24 * 3600 //convert to seconds
         )
         .send({ from: account, value: campaignPrice });
       setRedirect(true);
@@ -38,6 +39,8 @@ const NewProjectPage = ({ web3, account, campaignFactory }) => {
     }
   };
 
+  document.title = "Kickstarter New Campaign";
+
   if (redirect) return <Redirect to="/" />;
   return (
     <Box py={10}>
@@ -46,7 +49,7 @@ const NewProjectPage = ({ web3, account, campaignFactory }) => {
           Start A Campaign
         </Typography>
         <Box maxWidth={400} mx={"auto"} mt={10}>
-          <ProjectForm onSubmit={onSubmit} />
+          <ProjectForm onSubmit={onSubmit} pending={pending} />
         </Box>
         <Notification
           {...notification}

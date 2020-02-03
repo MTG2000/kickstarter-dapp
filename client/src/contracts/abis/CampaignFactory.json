@@ -2654,6 +2654,33 @@
     "version": "0.5.12+commit.7709ece9.Emscripten.clang"
   },
   "networks": {
+    "3": {
+      "events": {
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event",
+          "signature": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
+        }
+      },
+      "links": {},
+      "address": "0x08AB95b65d97155959E0054F9e1B26b17D651c2c",
+      "transactionHash": "0x07babed18f73c206043913d8cbaf61e8de2970a50d78e964877ae1de1219027b"
+    },
     "5777": {
       "events": {
         "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
@@ -2678,12 +2705,12 @@
         }
       },
       "links": {},
-      "address": "0xC49da2c1161Fbb57Ff3a9651986E40f0889D4BDE",
-      "transactionHash": "0xc143ecae6577265b01bd94b2186e4fd39c471cadf1f27b0b659a2667a6eb6b0d"
+      "address": "0x236AFca2e5F572eA573a2aB2798483D8768A18bC",
+      "transactionHash": "0xa0e77e11a9858ff39d4eee79e4c7b75357054abe55a5dc5f76ee1e4fe10d61f0"
     }
   },
   "schemaVersion": "3.0.20",
-  "updatedAt": "2020-02-03T16:46:47.998Z",
+  "updatedAt": "2020-02-03T19:53:56.147Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {
