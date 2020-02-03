@@ -36,6 +36,7 @@ const ProjectPage = props => {
       const endTime = await _campaign.methods.endTime().call();
       const owner = await _campaign.methods.owner().call();
       const amountDonated = await _campaign.methods.funds(account).call();
+      setTotalFunds(totalFunds);
       setProjectDetails({
         title,
         description,
@@ -45,7 +46,6 @@ const ProjectPage = props => {
         amountDonated,
         isOwner: owner === account
       });
-      setTotalFunds(totalFunds);
       //Subscribe to Funded Event
       _campaign.events.Funded({}, (err, event) => {
         if (err) console.log(err);
@@ -135,7 +135,6 @@ const ProjectPage = props => {
     return <Loading height="70vh" msg="loading Project Data" />;
 
   const { goal, endTime } = projectDetails;
-
   let fundsPercent = totalFunds / goal;
 
   fundsPercent *= 100;
