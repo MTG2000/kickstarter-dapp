@@ -15,10 +15,12 @@ contract Campaign is Ownable {
     State public state = State.Running;
     mapping(address => uint256) public funds;
 
+    event Funded(uint256 _totalFunds);
+
     function checkState() private {
         //if campaign ended & the state hasnt been set yet , set the new state
-        if (state == State.Running ) {
-            if(totalFunds >= goal ) state = State.Successeded;
+        if (state == State.Running) {
+            if (totalFunds >= goal) state = State.Successeded;
             else if (now > endTime) state = State.Failed;
         }
     }
@@ -69,6 +71,7 @@ contract Campaign is Ownable {
         require((msg.sender) != owner(), "Owner cant fund his own campaign");
         funds[msg.sender] += msg.value;
         totalFunds += msg.value;
+        emit Funded(totalFunds);
     }
 
     function refund() external inState(State.Failed, "Campaign didnt fail") {

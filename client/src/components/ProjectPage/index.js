@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CampaignABI } from "../../utils/contracts";
 import "react-circular-progressbar/dist/styles.css";
 import date from "date-and-time";
-
+import BN from "big-js";
 import Loading from "../layouts/Loading";
 import ProjectDetails from "./ProjectDetails";
 import { Typography, Box, Container } from "@material-ui/core";
@@ -13,6 +13,7 @@ const ProjectPage = props => {
   const { index } = match.params;
   const [campaign, setCampaign] = useState(null);
   const [projectDetails, setProjectDetails] = useState(null);
+  const [totalFunds, setTotalFunds] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [gameNotFound, setGameNotFound] = useState(false);
   const [notification, setNotification] = useState({
@@ -39,11 +40,19 @@ const ProjectPage = props => {
         title,
         description,
         imgUrl,
-        totalFunds,
         goal,
         endTime,
         amountDonated,
         isOwner: owner === account
+      });
+      setTotalFunds(totalFunds);
+      //Subscribe to Funded Event
+      _campaign.events.Funded({}, (err, event) => {
+        if (err) console.log(err);
+        else {
+          const { _totalFunds: totalFunds } = event.returnValues;
+          setTotalFunds(totalFunds);
+        }
       });
     } catch (error) {
       setGameNotFound(true);
@@ -61,7 +70,7 @@ const ProjectPage = props => {
     return (
       <Box py="3">
         <Typography variant="h2" align="center">
-          No Project Found ....
+          No Project Found....
         </Typography>
       </Box>
     );
@@ -79,9 +88,6 @@ const ProjectPage = props => {
         msg: "Successfully Sent Money",
         type: "success"
       });
-      setTimeout(() => {
-        getCampaign();
-      }, 2000);
     } catch (error) {
       setNotification({
         open: true,
@@ -128,24 +134,21 @@ const ProjectPage = props => {
   if (!projectDetails || !projectDetails.title)
     return <Loading height="70vh" msg="loading Project Data" />;
 
-  const { totalFunds, goal, endTime } = projectDetails;
+  const { goal, endTime } = projectDetails;
 
   let fundsPercent = totalFunds / goal;
 
   fundsPercent *= 100;
   fundsPercent = fundsPercent.toFixed(1);
-
   const campaignFailed =
     Date.now() > new Date(+endTime * 1000) &&
-    totalFunds < goal &&
-    web3.utils.toBN(`${totalFunds}`) < web3.utils.toBN(`${goal}`);
+    new BN(goal).cmp(new BN(totalFunds)) === 1;
 
   const endDate = date.format(new Date(+endTime * 1000), "YYYY/MM/DD");
 
   return (
     <Container>
       <Box py={10}>
-        {" "}
         <ProjectDetails
           dialogOpen={dialogOpen}
           fund={fund}
@@ -156,6 +159,7 @@ const ProjectPage = props => {
           endDate={endDate}
           campaignFailed={campaignFailed}
           {...projectDetails}
+          totalFunds={totalFunds}
         />
         <Notification
           {...notification}
