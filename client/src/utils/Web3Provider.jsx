@@ -21,13 +21,11 @@ const getWeb3 = async () => {
   }
   // Fallback to localhost; use dev console port by default...
   else {
-    const provider = new Web3.providers.HttpProvider("http://127.0.0.1:8545");
-    const web3 = new Web3(provider);
+    // const provider = new Web3.providers.HttpProvider("http://127.0.0.1:8545");
+    // const web3 = new Web3(provider);
     console.log("No web3 instance injected, using Local web3.");
-    alert(
-      "You need MetaMask browser extension to be able to Publish/Fund a Campaign"
-    );
-    return web3;
+    //alert("You need MetaMask browser extension to be able to Usa A Dapp");
+    return null;
   }
 };
 
@@ -44,9 +42,11 @@ function withWeb3(WrappedComponent, selectData) {
 
     async componentDidMount() {
       const web3 = await getWeb3();
-      this.setState({ ...this.state, web3 });
-      this.checkAccount(web3);
-      setInterval(() => this.checkAccount(web3), 1000);
+      if (web3) {
+        this.setState({ ...this.state, web3 });
+        this.checkAccount(web3);
+        setInterval(() => this.checkAccount(web3), 1000);
+      } else this.setState({ ...this.state, web3: -1 });
     }
 
     componentWillUnmount() {

@@ -6,6 +6,7 @@ import { Route, Switch } from "react-router-dom";
 import { CampaignFactoryABI, CampaignFactoryAddress } from "./utils/contracts";
 import Loading from "./components/layouts/Loading";
 import withWeb3 from "./utils/Web3Provider";
+import NoWeb3Message from "./components/layouts/NoWeb3Msg";
 
 const MainPage = lazy(() => import("./components/MainPage"));
 const NewProjectPage = lazy(() => import("./components/NewProjectPage"));
@@ -16,7 +17,7 @@ function App({ web3, account }) {
 
   useEffect(() => {
     (async () => {
-      if (web3) {
+      if (web3 && web3 !== -1) {
         const _campaignFactory = new web3.eth.Contract(
           CampaignFactoryABI,
           CampaignFactoryAddress
@@ -25,6 +26,8 @@ function App({ web3, account }) {
       }
     })();
   }, [web3]);
+
+  if (web3 === -1) return <NoWeb3Message />;
 
   if (!account || !campaignFactory)
     return <Loading msg="Loading Web3 and accounts" />;
